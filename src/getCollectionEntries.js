@@ -18,7 +18,7 @@ function getEntries(type, collection, sortObjectKeys, from = 0, to = Infinity) {
   if (type === 'Object') {
     let keys = Object.getOwnPropertyNames(collection);
 
-    if (typeof sortObjectKeys !== 'undefined') {
+    if (typeof sortObjectKeys === 'function') {
       keys.sort(sortObjectKeys);
     }
 
