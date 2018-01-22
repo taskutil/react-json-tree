@@ -28,7 +28,7 @@ const JSONValueNode = ({
             border-radius: 5px;
             bottom: 26px;
             color: #fff;
-            content: attr(title);
+            content: attr(data-path);
             left: 20%;
             padding: 5px 15px;
             position: absolute;
@@ -42,7 +42,7 @@ const JSONValueNode = ({
         {labelRenderer(keyPath, nodeType, false, false)}
       </label>
       <span
-        title={keyPath.reverse().join(' -> ')}
+        data-path={keyPath.reverse().join(' -> ')}
         className="tt"
         {...styling('valueText', nodeType, keyPath)}
       >
