@@ -6,6 +6,38 @@ import JSONArrayNode from './JSONArrayNode';
 import JSONIterableNode from './JSONIterableNode';
 import JSONValueNode from './JSONValueNode';
 
+function getDiffValue(rawValue) {
+  let parsedDiffValue = '';
+  let splitValue = rawValue.split('$');
+
+  let colour = 'background-color: ';
+  switch (splitValue[0]) {
+    case 'Unique':
+      colour += 'rgba(255, 0, 0, 0.4)';
+      break;
+    case 'Missing':
+      colour += 'rgba(0, 255, 0, 0.4)';
+      break;
+    case 'ValueChanged':
+      colour += 'rgba(255, 255, 0, 0.4)';
+      break;
+    default:
+      colour += 'transparent';
+      break;
+  }
+
+  if (splitValue[1]) {
+    parsedDiffValue += decodeURIComponent(splitValue[1]);
+  } else {
+    parsedDiffValue = '""';
+  }
+
+  return {
+    value: parsedDiffValue,
+    colour
+  };
+}
+
 const JSONNode = ({
   getItemString,
   keyPath,
@@ -36,6 +68,12 @@ const JSONNode = ({
     isCustomNode
   };
 
+  const isDiffMode = !!rest.diffMode;
+  let diffValues = {};
+  if (isDiffMode && nodeType === 'String') {
+    diffValues = getDiffValue(value);
+  }
+
   switch (nodeType) {
     case 'Object':
     case 'Error':
@@ -50,7 +88,11 @@ const JSONNode = ({
       return <JSONIterableNode {...nestedNodeProps} />;
     case 'String':
       return (
-        <JSONValueNode {...simpleNodeProps} valueGetter={raw => `"${raw}"`} />
+        <JSONValueNode
+          {...simpleNodeProps}
+          diffColour={diffValues.colour}
+          valueGetter={raw => (!isDiffMode ? `"${raw}"` : diffValues.value)}
+        />
       );
     case 'Number':
       return <JSONValueNode {...simpleNodeProps} />;

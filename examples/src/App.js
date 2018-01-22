@@ -109,6 +109,19 @@ const theme = {
 
 const App = () => (
   <div>
+    <JSONTree
+      data={{
+        badPings: 'Unique$',
+        badProfiles: 'Unique$',
+        document1: 'Missing$true',
+        fullProfiles: 'Unique$%5Bobject%20Object%5D',
+        results: 'Unique$%5Bobject%20Object%5D'
+      }}
+      theme={theme}
+      diffMode={true}
+      invertTheme
+    />
+    <br />
     <JSONTree data={data} theme={theme} invertTheme />
     <br />
     <h3>Dark Theme</h3>

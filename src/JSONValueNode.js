@@ -13,7 +13,8 @@ const JSONValueNode = ({
   keyPath,
   valueRenderer,
   value,
-  valueGetter
+  valueGetter,
+  diffColour
 }) => (
   <Style>
     {`
@@ -36,8 +37,12 @@ const JSONValueNode = ({
             min-width: 220px;
           text-align: center;
         }
+
+        .jsonValue {
+          ${diffColour};
+        }
       `}
-    <li {...styling('value', nodeType, keyPath)}>
+    <li className="jsonValue" {...styling('value', nodeType, keyPath)}>
       <label {...styling(['label', 'valueLabel'], nodeType, keyPath)}>
         {labelRenderer(keyPath, nodeType, false, false)}
       </label>
@@ -61,7 +66,8 @@ JSONValueNode.propTypes = {
   ).isRequired,
   valueRenderer: PropTypes.func.isRequired,
   value: PropTypes.any,
-  valueGetter: PropTypes.func
+  valueGetter: PropTypes.func,
+  diffColour: PropTypes.string
 };
 
 JSONValueNode.defaultProps = {
