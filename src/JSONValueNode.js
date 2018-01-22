@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Style from 'style-it';
 
 /**
  * Renders simple values (eg. strings, numbers, booleans, etc)
@@ -14,14 +15,41 @@ const JSONValueNode = ({
   value,
   valueGetter
 }) => (
-  <li {...styling('value', nodeType, keyPath)}>
-    <label {...styling(['label', 'valueLabel'], nodeType, keyPath)}>
-      {labelRenderer(keyPath, nodeType, false, false)}
-    </label>
-    <span {...styling('valueText', nodeType, keyPath)}>
-      {valueRenderer(valueGetter(value), value, ...keyPath)}
-    </span>
-  </li>
+  <Style>
+    {`
+        .tt {
+          display: inline;
+          position: relative;
+        }
+
+        .tt:hover:after{
+            background: #333;
+            background: rgba(0,0,0,.8);
+            border-radius: 5px;
+            bottom: 26px;
+            color: #fff;
+            content: attr(title);
+            left: 20%;
+            padding: 5px 15px;
+            position: absolute;
+            z-index: 98;
+            min-width: 220px;
+          text-align: center;
+        }
+      `}
+    <li {...styling('value', nodeType, keyPath)}>
+      <label {...styling(['label', 'valueLabel'], nodeType, keyPath)}>
+        {labelRenderer(keyPath, nodeType, false, false)}
+      </label>
+      <span
+        title={keyPath.reverse().join(' -> ')}
+        className="tt"
+        {...styling('valueText', nodeType, keyPath)}
+      >
+        {valueRenderer(valueGetter(value), value, ...keyPath)}
+      </span>
+    </li>
+  </Style>
 );
 
 JSONValueNode.propTypes = {
