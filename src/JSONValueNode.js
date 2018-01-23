@@ -42,11 +42,7 @@ const JSONValueNode = ({
           ${diffColour};
         }
       `}
-    <li
-      className="jsonValue"
-      {...styling('value', nodeType, keyPath)}
-      style={{ paddingTop: '0.2em', paddingBottom: '0.2em' }}
-    >
+    <li className="jsonValue" {...styling('value', nodeType, keyPath)}>
       <label {...styling(['label', 'valueLabel'], nodeType, keyPath)}>
         {labelRenderer(keyPath, nodeType, false, false)}
       </label>

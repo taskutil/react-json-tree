@@ -50,6 +50,7 @@ const getDefaultThemeStyling = theme => {
       style: {
         ...style,
         paddingTop: '0.25em',
+        paddingBottom: '0.25em',
         paddingRight: 0,
         marginLeft: '0.875em',
         WebkitUserSelect: 'text',
@@ -63,16 +64,19 @@ const getDefaultThemeStyling = theme => {
 
     label: {
       display: 'inline-block',
+      fontFamily: 'monospace',
       color: colors.LABEL_COLOR
     },
 
     valueLabel: {
-      margin: '0 0.5em 0 0'
+      margin: '0 0.5em 0 0',
+      fontFamily: 'monospace'
     },
 
     valueText: ({ style }, nodeType) => ({
       style: {
         ...style,
+        fontFamily: 'monospace',
         color: valueColorMap(colors)[nodeType]
       }
     }),
@@ -81,7 +85,8 @@ const getDefaultThemeStyling = theme => {
       style: {
         paddingTop: expanded ? 0 : '0.25em',
         cursor: 'pointer',
-        color: colors.LABEL_COLOR
+        color: colors.LABEL_COLOR,
+        fontFamily: 'monospace'
       }
     }),
 
@@ -146,7 +151,8 @@ const getDefaultThemeStyling = theme => {
         padding: 0,
         WebkitUserSelect: expandable ? 'inherit' : 'text',
         MozUserSelect: expandable ? 'inherit' : 'text',
-        cursor: expandable ? 'pointer' : 'default'
+        cursor: expandable ? 'pointer' : 'default',
+        fontFamily: 'monospace'
       }
     }),
 
@@ -155,6 +161,7 @@ const getDefaultThemeStyling = theme => {
         ...style,
         paddingLeft: '0.5em',
         cursor: 'default',
+        fontFamily: 'monospace',
         color: expanded
           ? colors.ITEM_STRING_EXPANDED_COLOR
           : colors.ITEM_STRING_COLOR
@@ -163,7 +170,8 @@ const getDefaultThemeStyling = theme => {
 
     nestedNodeItemType: {
       marginLeft: '0.3em',
-      marginRight: '0.3em'
+      marginRight: '0.3em',
+      fontFamily: 'monospace'
     },
 
     nestedNodeChildren: ({ style }, nodeType, expanded) => ({

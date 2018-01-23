@@ -80,7 +80,6 @@ const JSONNode = ({
   let diffValues = {};
   if (isDiffMode && nodeType === 'String') {
     diffValues = getDiffValue(value);
-    console.info(diffValues);
   }
 
   switch (nodeType) {
