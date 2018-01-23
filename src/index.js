@@ -90,7 +90,8 @@ export default class JSONTree extends React.Component {
     ),
     postprocessValue: PropTypes.func,
     sortObjectKeys: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
-    diffMode: PropTypes.bool
+    diffMode: PropTypes.bool,
+    diffLabelCreator: PropTypes.func
   };
 
   static defaultProps = {
@@ -103,7 +104,8 @@ export default class JSONTree extends React.Component {
     postprocessValue: identity,
     isCustomNode: noCustomNode,
     collectionLimit: 50,
-    invertTheme: true
+    invertTheme: true,
+    diffLabelCreator: identity
   };
 
   constructor(props) {

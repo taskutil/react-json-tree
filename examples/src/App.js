@@ -115,11 +115,26 @@ const App = () => (
         badProfiles: 'Unique$',
         document1: 'Missing$true',
         fullProfiles: 'Unique$%5Bobject%20Object%5D',
-        results: 'Unique$%5Bobject%20Object%5D'
+        results: 'Unique$%5Bobject%20Object%5D',
+        foo: 'ValueChanged$bob=>todd'
       }}
       theme={theme}
       diffMode={true}
       invertTheme
+      diffLabelCreator={status => {
+        return (
+          <span
+            style={{
+              backgroundColor: '#777',
+              color: 'white',
+              fontSize: '0.8em',
+              padding: '0.2em 0.4em'
+            }}
+          >
+            {status}
+          </span>
+        );
+      }}
     />
     <br />
     <JSONTree data={data} theme={theme} invertTheme />

@@ -7,35 +7,43 @@ import JSONIterableNode from './JSONIterableNode';
 import JSONValueNode from './JSONValueNode';
 
 function getDiffValue(rawValue) {
-  let parsedDiffValue = '';
+  let diffValue = {};
+
   let splitValue = rawValue.split('$');
 
   let colour = 'background-color: ';
   switch (splitValue[0]) {
     case 'Unique':
       colour += 'rgba(255, 0, 0, 0.4)';
+      diffValue.type = 'Unique';
       break;
     case 'Missing':
       colour += 'rgba(0, 255, 0, 0.4)';
+      diffValue.type = 'Missing';
       break;
     case 'ValueChanged':
       colour += 'rgba(255, 255, 0, 0.4)';
+      diffValue.type = 'ValueChanged';
       break;
     default:
       colour += 'transparent';
+      diffValue.type = 'Unknown';
       break;
   }
+  diffValue.colour = colour;
 
   if (splitValue[1]) {
-    parsedDiffValue += decodeURIComponent(splitValue[1]);
+    diffValue.value = decodeURIComponent(splitValue[1]);
+    if (diffValue.value.indexOf('=>') !== -1) {
+      let split = diffValue.value.split('=>');
+      diffValue.value = split[0];
+      diffValue.changedValue = split[1];
+    }
   } else {
-    parsedDiffValue = '""';
+    diffValue.value = '""';
   }
 
-  return {
-    value: parsedDiffValue,
-    colour
-  };
+  return diffValue;
 }
 
 const JSONNode = ({
@@ -72,6 +80,7 @@ const JSONNode = ({
   let diffValues = {};
   if (isDiffMode && nodeType === 'String') {
     diffValues = getDiffValue(value);
+    console.info(diffValues);
   }
 
   switch (nodeType) {
@@ -91,7 +100,28 @@ const JSONNode = ({
         <JSONValueNode
           {...simpleNodeProps}
           diffColour={diffValues.colour}
-          valueGetter={raw => (!isDiffMode ? `"${raw}"` : diffValues.value)}
+          valueGetter={raw => {
+            if (!isDiffMode) {
+              return `"${raw}"`;
+            } else {
+              if (diffValues.type === 'ValueChanged') {
+                return (
+                  <span>
+                    {rest.diffLabelCreator(diffValues.type)}
+                    <span>{`"${diffValues.value}" => "${
+                      diffValues.changedValue
+                    }"`}</span>
+                  </span>
+                );
+              } else {
+                return (
+                  <span>
+                    {rest.diffLabelCreator(diffValues.type)} {diffValues.value}
+                  </span>
+                );
+              }
+            }
+          }}
         />
       );
     case 'Number':
