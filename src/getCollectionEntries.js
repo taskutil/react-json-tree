@@ -21,6 +21,9 @@ function getEntries(type, collection, sortObjectKeys, from = 0, to = Infinity) {
     if (typeof sortObjectKeys === 'function') {
       keys.sort(sortObjectKeys);
     }
+    else if (typeof sortObjectKeys === 'boolean' && sortObjectKeys === true) {
+      keys.sort();
+    }
 
     keys = keys.slice(from, to + 1);
 
